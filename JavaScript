@@ -1,0 +1,18 @@
+async function getVerse() {
+  const book = document.getElementById('book').value;
+  const chapter = document.getElementById('chapter').value;
+  const output = document.getElementById('output');
+
+  if (!book || !chapter) {
+    output.innerText = "Please enter both a book and chapter.";
+    return;
+  }
+
+  try {
+    const res = await fetch(`https://bible-api.com/${book}+${chapter}`);
+    const data = await res.json();
+    output.innerHTML = `<strong>${data.reference}</strong><br>${data.text}`;
+  } catch (err) {
+    output.innerText = "Couldn't load verse. Try again.";
+  }
+}
